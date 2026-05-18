@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Exact alarm permissions -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+
+    <!-- Boot restore -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- Foreground service for alarm delivery -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+
+    <!-- Notifications (Android 13+) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- Lock-screen alarm display -->
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+
+    <!-- Wake device for alarm -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Network for RevenueCat + AdMob -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Battery optimization request -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
+    <application
+        android:name=".JustSimpleReminderApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.JustSimpleReminder">
+
+        <!-- ═══════════════════════ Activities ═══════════════════════ -->
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--
+            AlarmActivity: displayed on lock screen when alarm fires.
+            launchMode=singleInstance prevents stacking.
+            showOnLockScreen + turnScreenOn declared here for API < 27.
+            API 27+ uses setShowWhenLocked() / setTurnScreenOn() in code.
+        -->
+        <activity
+            android:name=".ui.alarm.AlarmActivity"
+            android:exported="false"
+            android:showOnLockScreen="true"
+            android:turnScreenOn="true"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
+            android:taskAffinity=""
+            android:theme="@style/Theme.JustSimpleReminder" />
+
+        <!-- ═══════════════════════ Receivers ════════════════════════ -->
+
+        <!-- Fired by AlarmManager when a reminder is due -->
+        <receiver
+            android:name=".alarms.receivers.AlarmReceiver"
+            android:exported="false" />
+
+        <!-- Restores all alarms after device reboot -->
+        <receiver
+            android:name=".alarms.receivers.BootReceiver"
+            android:exported="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter android:priority="999">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <!-- Xiaomi / POCO fast-boot -->
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Recalculates alarms on time/timezone change or app update -->
+        <receiver
+            android:name=".alarms.receivers.TimeChangeReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- ═══════════════════════ AdMob ════════════════════════════ -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_app_id" />
+
+    </application>
+
+</manifest>

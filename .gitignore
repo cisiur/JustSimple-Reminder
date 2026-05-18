@@ -1,0 +1,20 @@
+*.iml
+.gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Android
+app/build/
+app/schemas/
+
+# Gradle wrapper (keep gradlew scripts, ignore binaries)
+gradle/wrapper/gradle-wrapper.jar
+
+# Kotlin
+*.class

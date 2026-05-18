@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">JustSimple Reminder</string>
+
+    <!-- Reminder List -->
+    <string name="screen_title_reminders">Przypomnienia</string>
+    <string name="cd_add_reminder">Dodaj przypomnienie</string>
+    <string name="empty_state_title">Brak przypomnień</string>
+    <string name="empty_state_body">Dotknij +, aby dodać pierwsze przypomnienie.</string>
+    <string name="label_enabled">Włączone</string>
+    <string name="label_disabled">Wyłączone</string>
+    <string name="action_delete">Usuń</string>
+    <string name="cd_delete_reminder">Usuń przypomnienie</string>
+    <string name="cd_toggle_reminder">Włącz lub wyłącz przypomnienie</string>
+
+    <string name="time_remaining_minutes">%1$d min</string>
+    <string name="time_remaining_hours">%1$d godz.</string>
+    <string name="time_remaining_days">%1$d dni</string>
+    <string name="time_remaining_weeks">%1$d tyg.</string>
+    <string name="time_remaining_now">Teraz</string>
+    <string name="time_remaining_expired">Wygasło</string>
+
+    <string name="recurrence_once">Jednorazowo</string>
+    <string name="recurrence_daily">Codziennie</string>
+    <string name="recurrence_weekly">Co tydzień</string>
+    <string name="recurrence_monthly">Co miesiąc</string>
+
+    <string name="warning_battery_optimization">Optymalizacja baterii jest włączona — alarmy mogą być opóźnione. Dotknij, aby naprawić.</string>
+    <string name="warning_exact_alarm">Brak uprawnień do dokładnych alarmów — alarmy nie będą działać. Dotknij, aby naprawić.</string>
+
+    <!-- Add / Edit -->
+    <string name="screen_title_add_reminder">Nowe przypomnienie</string>
+    <string name="screen_title_edit_reminder">Edytuj przypomnienie</string>
+    <string name="label_title">Tytuł</string>
+    <string name="label_date">Data</string>
+    <string name="label_time">Godzina</string>
+    <string name="label_recurrence">Powtarzanie</string>
+    <string name="action_save">Zapisz</string>
+    <string name="action_cancel">Anuluj</string>
+    <string name="error_title_empty">Tytuł nie może być pusty.</string>
+    <string name="error_date_past">Data i godzina muszą być w przyszłości.</string>
+
+    <string name="dialog_free_limit_title">Osiągnięto limit</string>
+    <string name="dialog_free_limit_body">Darmowy plan pozwala na maksymalnie 2 aktywne przypomnienia. Przejdź na Premium, aby dodawać ich bez ograniczeń.</string>
+    <string name="action_upgrade">Przejdź na Premium</string>
+    <string name="action_not_now">Nie teraz</string>
+
+    <!-- Alarm Activity -->
+    <string name="action_dismiss">Zatrzymaj</string>
+    <string name="action_snooze">Drzemka</string>
+    <string name="label_scheduled_time">Zaplanowano na %1$s</string>
+
+    <string name="snooze_5_min">5 minut</string>
+    <string name="snooze_10_min">10 minut</string>
+    <string name="snooze_15_min">15 minut</string>
+    <string name="snooze_1_hour">1 godzina</string>
+    <string name="snooze_3_hours">3 godziny</string>
+    <string name="snooze_1_day">1 dzień</string>
+    <string name="snooze_custom">Własna…</string>
+    <string name="title_snooze_until">Drzemka do</string>
+
+    <string name="notification_channel_alarm_name">Alarmy</string>
+    <string name="notification_channel_alarm_description">Powiadomienia alarmowe dla Twoich przypomnień</string>
+    <string name="notification_alarm_title">%1$s</string>
+    <string name="notification_alarm_body">Przypomnienie o %1$s</string>
+    <string name="notification_action_dismiss">Zatrzymaj</string>
+    <string name="notification_action_snooze">Drzemka 10 min</string>
+
+    <!-- Settings -->
+    <string name="screen_title_settings">Ustawienia</string>
+    <string name="settings_section_time_format">Format czasu</string>
+    <string name="settings_time_format_12h">12-godzinny (AM/PM)</string>
+    <string name="settings_time_format_24h">24-godzinny</string>
+    <string name="settings_section_permissions">Uprawnienia</string>
+    <string name="settings_notifications_label">Powiadomienia</string>
+    <string name="settings_notifications_granted">Przyznane</string>
+    <string name="settings_notifications_denied">Nieprzyznane — dotknij, aby włączyć</string>
+    <string name="settings_exact_alarms_label">Dokładne alarmy</string>
+    <string name="settings_exact_alarms_granted">Dozwolone</string>
+    <string name="settings_exact_alarms_denied">Niedozwolone — dotknij, aby włączyć</string>
+    <string name="settings_section_subscription">Subskrypcja</string>
+    <string name="settings_subscription_free">Darmowy plan</string>
+    <string name="settings_subscription_premium">Premium</string>
+    <string name="settings_action_upgrade">Przejdź na Premium</string>
+    <string name="settings_action_manage">Zarządzaj subskrypcją</string>
+    <string name="settings_action_restore">Przywróć zakupy</string>
+    <string name="settings_restore_success">Zakupy przywrócone.</string>
+    <string name="settings_restore_failure">Nie udało się przywrócić zakupów. Spróbuj ponownie.</string>
+    <string name="settings_section_reliability">Niezawodność alarmów</string>
+    <string name="settings_action_diagnostics">Zobacz diagnostykę</string>
+    <string name="settings_section_about">O aplikacji</string>
+    <string name="settings_privacy_policy">Polityka prywatności</string>
+    <string name="settings_version">Wersja %1$s</string>
+
+    <!-- Diagnostics -->
+    <string name="screen_title_diagnostics">Diagnostyka alarmów</string>
+    <string name="diag_notifications">Powiadomienia</string>
+    <string name="diag_exact_alarms">Dokładne alarmy</string>
+    <string name="diag_battery_optimization">Optymalizacja baterii wyłączona</string>
+    <string name="diag_fullscreen_intent">Alarm pełnoekranowy</string>
+    <string name="diag_status_ok">OK</string>
+    <string name="diag_status_needs_action">Wymagane działanie</string>
+    <string name="diag_status_oem_limited">Ograniczone przez producenta</string>
+    <string name="diag_device_info">Informacje o urządzeniu</string>
+    <string name="diag_manufacturer">Producent: %1$s</string>
+    <string name="diag_model">Model: %1$s</string>
+    <string name="diag_android_version">Android: %1$s (API %2$d)</string>
+    <string name="diag_last_scheduled">Ostatnio zaplanowano: %1$s</string>
+    <string name="diag_next_scheduled">Następny alarm: %1$s</string>
+    <string name="diag_none">Brak</string>
+    <string name="action_open_battery_settings">Otwórz ustawienia baterii</string>
+    <string name="action_open_app_settings">Otwórz ustawienia aplikacji</string>
+
+    <string name="screen_title_reliability">Popraw niezawodność alarmów</string>
+    <string name="reliability_intro">Twoje urządzenie (%1$s) może ograniczać procesy w tle. Wykonaj poniższe kroki, aby alarmy zawsze działały.</string>
+    <string name="reliability_step_autostart">Włącz Autostart dla Reminder Alarm</string>
+    <string name="reliability_step_battery">Ustaw tryb baterii na Brak ograniczeń</string>
+    <string name="reliability_step_lock_screen">Włącz Pokaż na ekranie blokady</string>
+    <string name="reliability_step_lock_notifications">Włącz Powiadomienia na ekranie blokady</string>
+    <string name="action_open_autostart">Otwórz ustawienia autostaru</string>
+    <string name="action_open_lock_screen_settings">Otwórz ustawienia ekranu blokady</string>
+
+    <!-- Paywall -->
+    <string name="screen_title_paywall">Przejdź na Premium</string>
+    <string name="paywall_headline">Nieograniczone przypomnienia</string>
+    <string name="paywall_feature_unlimited">Nieograniczona liczba aktywnych przypomnień</string>
+    <string name="paywall_feature_no_ads">Brak reklam</string>
+    <string name="paywall_feature_priority">Priorytetowe dostarczanie alarmów</string>
+    <string name="action_subscribe">Subskrybuj</string>
+    <string name="paywall_terms">Subskrypcja odnawia się automatycznie. Anuluj w dowolnym momencie.</string>
+    <string name="paywall_loading">Ładowanie ofert…</string>
+    <string name="paywall_error">Nie można załadować ofert. Sprawdź połączenie i spróbuj ponownie.</string>
+</resources>
