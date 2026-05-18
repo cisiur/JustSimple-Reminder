@@ -71,7 +71,11 @@
         <!-- Fired by AlarmManager when a reminder is due -->
         <receiver
             android:name=".alarms.receivers.AlarmReceiver"
-            android:exported="false" />
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.justsimple.reminder.ACTION_ALARM_TRIGGER" />
+            </intent-filter>
+        </receiver>
 
         <!-- Restores all alarms after device reboot -->
         <receiver
@@ -96,6 +100,22 @@
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
+
+        <!-- ═══════════════════════ Services ════════════════════════ -->
+
+        <!--
+            AlarmForegroundService: posts the alarm notification + launches AlarmActivity.
+            foregroundServiceType="specialUse" required on Android 14+ (API 34).
+            The <property> tag below satisfies the Play Store's special-use declaration.
+        -->
+        <service
+            android:name=".alarms.service.AlarmForegroundService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Alarm clock foreground service — delivers reminder alarms to the user" />
+        </service>
 
         <!-- ═══════════════════════ AdMob ════════════════════════════ -->
         <meta-data
