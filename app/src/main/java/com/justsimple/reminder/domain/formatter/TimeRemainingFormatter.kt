@@ -13,7 +13,7 @@ class TimeRemainingFormatter @Inject constructor(
 ) {
     fun format(triggerMillis: Long, nowMillis: Long = System.currentTimeMillis()): String {
         val diffMillis = triggerMillis - nowMillis
-        if (diffMillis < 0) return context.getString(R.string.time_remaining_expired)
+        if (diffMillis <= 0) return context.getString(R.string.time_remaining_expired)
         if (diffMillis < 60_000) return context.getString(R.string.time_remaining_now)
 
         val minutes = diffMillis / 60_000

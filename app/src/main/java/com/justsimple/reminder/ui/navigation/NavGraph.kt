@@ -1,9 +1,14 @@
-﻿package com.justsimple.reminder.ui.navigation
+package com.justsimple.reminder.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.justsimple.reminder.reliability.OemReliabilityGuide
+import com.justsimple.reminder.ui.reminders.ReminderListScreen
 
 sealed class Screen(val route: String) {
     data object ReminderList : Screen("reminders")
@@ -19,9 +24,47 @@ sealed class Screen(val route: String) {
 }
 
 @Composable
-fun JustSimpleReminderNavHost(navController: NavHostController = rememberNavController()) {
+fun JustSimpleReminderNavHost(
+    reliabilityGuide: OemReliabilityGuide,
+    navController: NavHostController = rememberNavController(),
+) {
     NavHost(navController = navController, startDestination = Screen.ReminderList.route) {
-        // TODO Module 6-10: add composable() destinations
+
+        composable(Screen.ReminderList.route) {
+            ReminderListScreen(
+                onAddClick = { navController.navigate(Screen.AddReminder.route) },
+                onEditClick = { id -> navController.navigate(Screen.EditReminder().routeWithId(id)) },
+                onSettingsClick = { navController.navigate(Screen.Settings.route) },
+                onOpenBatterySettings = { reliabilityGuide.openBatteryOptimizationSettings() },
+                onOpenAlarmSettings = { reliabilityGuide.openAlarmPermissionSettings() },
+            )
+        }
+
+        composable(
+            route = Screen.EditReminder().route,
+            arguments = listOf(navArgument(Screen.EditReminder.ARG) { type = NavType.LongType }),
+        ) {
+            // TODO Module 7: AddEditReminderScreen(reminderId = it.arguments?.getLong(ARG))
+        }
+
+        composable(Screen.AddReminder.route) {
+            // TODO Module 7: AddEditReminderScreen(reminderId = null)
+        }
+
+        composable(Screen.Settings.route) {
+            // TODO Module 9
+        }
+
+        composable(Screen.Diagnostics.route) {
+            // TODO Module 10
+        }
+
+        composable(Screen.Reliability.route) {
+            // TODO Module 10
+        }
+
+        composable(Screen.Paywall.route) {
+            // TODO Module 11
+        }
     }
 }
-

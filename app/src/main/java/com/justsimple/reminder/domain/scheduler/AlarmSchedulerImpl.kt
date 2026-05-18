@@ -87,7 +87,7 @@ class AlarmSchedulerImpl @Inject constructor(
      * Returns true if the app is allowed to schedule exact alarms.
      * Always true below API 31 — the permission wasn't required before S.
      */
-    fun canScheduleExact(): Boolean =
+    override fun canScheduleExact(): Boolean =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             alarmManager.canScheduleExactAlarms()
         } else {

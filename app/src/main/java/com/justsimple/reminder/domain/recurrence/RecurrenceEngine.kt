@@ -2,6 +2,7 @@ package com.justsimple.reminder.domain.recurrence
 
 import com.justsimple.reminder.data.db.ReminderEntity
 import java.time.LocalDate
+import javax.inject.Inject
 import java.time.LocalTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -12,7 +13,7 @@ import java.time.format.DateTimeFormatter
  *
  * Single entry point: [nextTriggerMillis].
  */
-class RecurrenceEngine {
+class RecurrenceEngine @Inject constructor() {
 
     private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
