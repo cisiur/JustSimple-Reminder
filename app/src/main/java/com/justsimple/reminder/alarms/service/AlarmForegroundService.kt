@@ -57,7 +57,9 @@ class AlarmForegroundService : Service() {
         val reminderId = intent?.getLongExtra(AlarmReceiver.EXTRA_REMINDER_ID, -1L) ?: -1L
 
         // Start foreground immediately — must happen within 5 s of startForegroundService()
-        startForegroundCompat(buildPlaceholderNotification())
+        // Pass reminderId so the placeholder already carries a fullScreenIntent,
+        // which is what triggers full-screen display when the screen is locked.
+        startForegroundCompat(buildPlaceholderNotification(reminderId))
 
         if (reminderId == -1L) {
             Log.e(TAG, "No reminderId in intent — stopping service")
@@ -65,6 +67,18 @@ class AlarmForegroundService : Service() {
             return START_NOT_STICKY
         }
 
+        // Launch AlarmActivity NOW — before any async work.
+        // Delaying until after the DB fetch causes Android to fall back to a
+        // heads-up notification because the window for a synchronous activity
+        // launch from a foreground service has already passed.
+        // FLAG_ACTIVITY_NO_USER_ACTION is required so the system treats this as
+        // an alarm (not a user-initiated launch), which matters for lock-screen display.
+        val activityIntent = AlarmActivity.createIntent(this, reminderId).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_USER_ACTION)
+        }
+        startActivity(activityIntent)
+
+        // Async: fetch reminder title and update the foreground notification.
         serviceScope.launch {
             val reminder = repository.getById(reminderId)
             if (reminder == null) {
@@ -73,16 +87,9 @@ class AlarmForegroundService : Service() {
                 return@launch
             }
 
-            // Update notification with real content and launch AlarmActivity
             val notification = buildAlarmNotification(reminder)
             val nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             nm.notify(NOTIFICATION_ID, notification)
-
-            // Explicitly start AlarmActivity for cases where fullScreenIntent was
-            // suppressed (screen on, app in foreground, etc.)
-            val activityIntent = AlarmActivity.createIntent(this@AlarmForegroundService, reminderId)
-            activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(activityIntent)
         }
 
         return START_NOT_STICKY
@@ -97,15 +104,29 @@ class AlarmForegroundService : Service() {
 
     // ── Notification builders ─────────────────────────────────────────────────
 
-    private fun buildPlaceholderNotification(): Notification =
-        NotificationCompat.Builder(this, CHANNEL_ID)
+    private fun buildPlaceholderNotification(reminderId: Long = -1L): Notification {
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(getString(R.string.app_name))
             .setContentText("…")
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setOngoing(true)
-            .build()
+
+        if (reminderId != -1L) {
+            val fsi = PendingIntent.getActivity(
+                this,
+                reminderId.toInt(),
+                AlarmActivity.createIntent(this, reminderId).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_USER_ACTION)
+                },
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+            )
+            builder.setFullScreenIntent(fsi, true)
+        }
+
+        return builder.build()
+    }
 
     private fun buildAlarmNotification(reminder: ReminderEntity): Notification {
         val timeDisplay = runCatching {

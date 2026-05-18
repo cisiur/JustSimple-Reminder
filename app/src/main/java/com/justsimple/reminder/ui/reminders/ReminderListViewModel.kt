@@ -9,6 +9,7 @@ import com.justsimple.reminder.domain.formatter.ReminderDisplayFormatter
 import com.justsimple.reminder.domain.recurrence.RecurrenceType
 import com.justsimple.reminder.domain.scheduler.AlarmScheduler
 import com.justsimple.reminder.domain.settings.UserPreferences
+import com.justsimple.reminder.domain.usecase.RescheduleAlarmsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -35,6 +36,7 @@ class ReminderListViewModel @Inject constructor(
     private val userPreferences: UserPreferences,
     private val formatter: ReminderDisplayFormatter,
     private val deviceInfoProvider: DeviceInfoProvider,
+    private val rescheduleAlarms: RescheduleAlarmsUseCase,
 ) : ViewModel() {
 
     private val _showBatteryWarning = MutableStateFlow(false)
@@ -65,8 +67,15 @@ class ReminderListViewModel @Inject constructor(
 
     fun refreshWarnings() {
         val info = deviceInfoProvider.get()
+        val hadExactAlarmWarning = _showExactAlarmWarning.value
         _showBatteryWarning.value = !info.isIgnoringBatteryOptimizations
         _showExactAlarmWarning.value = !info.canScheduleExactAlarms
+
+        // Permission was just granted — reschedule any alarms that were skipped
+        // while canScheduleExact() was false (broadcast may not have arrived yet).
+        if (hadExactAlarmWarning && info.canScheduleExactAlarms) {
+            viewModelScope.launch { rescheduleAlarms() }
+        }
     }
 
     fun dismissFreeTierDialog() {

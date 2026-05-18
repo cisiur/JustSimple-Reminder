@@ -44,10 +44,17 @@ class TimeChangeReceiver : BroadcastReceiver() {
 
     companion object {
         private const val TAG = "TimeChangeReceiver"
+
+        // Fired on API 31+ when the user grants or revokes SCHEDULE_EXACT_ALARM.
+        // Adding it here (instead of a separate receiver) keeps reschedule logic in one place.
+        private const val ACTION_EXACT_ALARM_PERMISSION_CHANGED =
+            "android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED"
+
         private val HANDLED_ACTIONS = setOf(
             Intent.ACTION_TIME_CHANGED,
             Intent.ACTION_TIMEZONE_CHANGED,
             Intent.ACTION_MY_PACKAGE_REPLACED,
+            ACTION_EXACT_ALARM_PERMISSION_CHANGED,
         )
     }
 }
