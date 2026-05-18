@@ -45,6 +45,8 @@ class ReminderDisplayFormatter @Inject constructor(
             },
             enabled = entity.enabled,
             nextTriggerAt = entity.nextTriggerAt,
+            isExpired = entity.recurrenceType == RecurrenceType.ONCE &&
+                entity.nextTriggerAt <= nowMillis,
         )
     }
 

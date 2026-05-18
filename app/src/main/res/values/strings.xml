@@ -44,9 +44,25 @@
     <string name="label_time">Time</string>
     <string name="label_recurrence">Recurrence</string>
     <string name="action_save">Save</string>
+    <string name="action_ok">OK</string>
     <string name="action_cancel">Cancel</string>
+    <string name="cd_navigate_back">Navigate back</string>
     <string name="error_title_empty">Title cannot be empty.</string>
     <string name="error_date_past">Date and time must be in the future.</string>
+
+    <!-- Recurrence chip labels (short, for segmented button) -->
+    <string name="recurrence_chip_once">Once</string>
+    <string name="recurrence_chip_daily">Daily</string>
+    <string name="recurrence_chip_weekly">Weekly</string>
+    <string name="recurrence_chip_monthly">Monthly</string>
+
+    <!-- Delete confirmation dialog -->
+    <string name="dialog_delete_title">Delete reminder?</string>
+    <string name="dialog_delete_body">This action cannot be undone.</string>
+    <string name="cd_delete_reminder_action">Delete reminder</string>
+
+    <!-- Past date error dialog -->
+    <string name="dialog_past_date_title">Date in the past</string>
 
     <!-- Free tier gate dialog -->
     <string name="dialog_free_limit_title">Reminder limit reached</string>

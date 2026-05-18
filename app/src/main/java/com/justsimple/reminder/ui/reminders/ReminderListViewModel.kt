@@ -6,6 +6,7 @@ import com.justsimple.reminder.data.repository.ReminderRepository
 import com.justsimple.reminder.diagnostics.DeviceInfoProvider
 import com.justsimple.reminder.domain.entitlement.PremiumManager
 import com.justsimple.reminder.domain.formatter.ReminderDisplayFormatter
+import com.justsimple.reminder.domain.recurrence.RecurrenceType
 import com.justsimple.reminder.domain.scheduler.AlarmScheduler
 import com.justsimple.reminder.domain.settings.UserPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,6 +24,7 @@ data class ReminderListUiState(
     val isPremium: Boolean = false,
     val showBatteryWarning: Boolean = false,
     val showExactAlarmWarning: Boolean = false,
+    val showFreeTierDialog: Boolean = false,
 )
 
 @HiltViewModel
@@ -36,6 +39,7 @@ class ReminderListViewModel @Inject constructor(
 
     private val _showBatteryWarning = MutableStateFlow(false)
     private val _showExactAlarmWarning = MutableStateFlow(false)
+    private val _showFreeTierDialog = MutableStateFlow(false)
 
     val uiState: StateFlow<ReminderListUiState> = combine(
         repository.observeAll(),
@@ -51,21 +55,39 @@ class ReminderListViewModel @Inject constructor(
             showBatteryWarning = batteryWarn,
             showExactAlarmWarning = alarmWarn,
         )
+    }.combine(_showFreeTierDialog) { state, showDialog ->
+        state.copy(showFreeTierDialog = showDialog)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = ReminderListUiState(),
     )
 
-    /** Called every time the screen resumes so warning banners reflect current state. */
     fun refreshWarnings() {
         val info = deviceInfoProvider.get()
         _showBatteryWarning.value = !info.isIgnoringBatteryOptimizations
         _showExactAlarmWarning.value = !info.canScheduleExactAlarms
     }
 
+    fun dismissFreeTierDialog() {
+        _showFreeTierDialog.value = false
+    }
+
     fun setEnabled(id: Long, enabled: Boolean) {
         viewModelScope.launch {
+            if (enabled) {
+                val reminder = repository.getById(id) ?: return@launch
+                // ONCE reminders whose alarm time has passed cannot be re-enabled
+                if (reminder.recurrenceType == RecurrenceType.ONCE &&
+                    reminder.nextTriggerAt <= System.currentTimeMillis()
+                ) return@launch
+
+                val isPremium = premiumManager.observePremiumStatus().first()
+                if (!isPremium && repository.countEnabled() >= 2) {
+                    _showFreeTierDialog.value = true
+                    return@launch
+                }
+            }
             repository.setEnabled(id, enabled)
             val reminder = repository.getById(id) ?: return@launch
             if (enabled) scheduler.schedule(reminder) else scheduler.cancel(id)

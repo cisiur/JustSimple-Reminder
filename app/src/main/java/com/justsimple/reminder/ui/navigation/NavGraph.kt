@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.justsimple.reminder.reliability.OemReliabilityGuide
+import com.justsimple.reminder.ui.addedit.AddEditReminderScreen
 import com.justsimple.reminder.ui.reminders.ReminderListScreen
 
 sealed class Screen(val route: String) {
@@ -37,18 +38,28 @@ fun JustSimpleReminderNavHost(
                 onSettingsClick = { navController.navigate(Screen.Settings.route) },
                 onOpenBatterySettings = { reliabilityGuide.openBatteryOptimizationSettings() },
                 onOpenAlarmSettings = { reliabilityGuide.openAlarmPermissionSettings() },
+                onNavigateToPaywall = { navController.navigate(Screen.Paywall.route) },
             )
         }
 
         composable(
             route = Screen.EditReminder().route,
             arguments = listOf(navArgument(Screen.EditReminder.ARG) { type = NavType.LongType }),
-        ) {
-            // TODO Module 7: AddEditReminderScreen(reminderId = it.arguments?.getLong(ARG))
+        ) { backStackEntry ->
+            val reminderId = backStackEntry.arguments?.getLong(Screen.EditReminder.ARG)
+            AddEditReminderScreen(
+                reminderId = reminderId,
+                onBack = { navController.popBackStack() },
+                onNavigateToPaywall = { navController.navigate(Screen.Paywall.route) },
+            )
         }
 
         composable(Screen.AddReminder.route) {
-            // TODO Module 7: AddEditReminderScreen(reminderId = null)
+            AddEditReminderScreen(
+                reminderId = null,
+                onBack = { navController.popBackStack() },
+                onNavigateToPaywall = { navController.navigate(Screen.Paywall.route) },
+            )
         }
 
         composable(Screen.Settings.route) {

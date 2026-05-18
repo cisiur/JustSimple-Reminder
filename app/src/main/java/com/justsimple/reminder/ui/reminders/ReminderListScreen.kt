@@ -21,6 +21,7 @@ import androidx.compose.material.icons.filled.Alarm
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -33,6 +34,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -63,6 +65,7 @@ fun ReminderListScreen(
     onSettingsClick: () -> Unit,
     onOpenBatterySettings: () -> Unit,
     onOpenAlarmSettings: () -> Unit,
+    onNavigateToPaywall: () -> Unit,
     viewModel: ReminderListViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -73,6 +76,25 @@ fun ReminderListScreen(
         lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
             viewModel.refreshWarnings()
         }
+    }
+
+    if (uiState.showFreeTierDialog) {
+        AlertDialog(
+            onDismissRequest = viewModel::dismissFreeTierDialog,
+            title = { Text(stringResource(R.string.dialog_free_limit_title)) },
+            text = { Text(stringResource(R.string.dialog_free_limit_body)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    viewModel.dismissFreeTierDialog()
+                    onNavigateToPaywall()
+                }) { Text(stringResource(R.string.action_upgrade)) }
+            },
+            dismissButton = {
+                TextButton(onClick = viewModel::dismissFreeTierDialog) {
+                    Text(stringResource(R.string.action_not_now))
+                }
+            },
+        )
     }
 
     Scaffold(
@@ -138,6 +160,7 @@ fun ReminderListScreen(
                             onDelete = { viewModel.delete(reminder.id) },
                             modifier = Modifier.padding(horizontal = 12.dp),
                         )
+
                     }
 
                     item { Spacer(Modifier.height(80.dp)) } // FAB clearance
@@ -238,6 +261,7 @@ private fun SwipeToDeleteReminderItem(
             reminder = reminder,
             onEdit = onEdit,
             onToggle = onToggle,
+            onDelete = onDelete,
         )
     }
 }
@@ -249,6 +273,7 @@ private fun ReminderCard(
     reminder: ReminderUiModel,
     onEdit: () -> Unit,
     onToggle: (Boolean) -> Unit,
+    onDelete: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -289,10 +314,18 @@ private fun ReminderCard(
                 }
             }
 
+            IconButton(onClick = onDelete) {
+                Icon(
+                    Icons.Default.Delete,
+                    contentDescription = stringResource(R.string.cd_delete_reminder),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
             Switch(
                 checked = reminder.enabled,
                 onCheckedChange = onToggle,
-                modifier = Modifier.padding(start = 12.dp),
+                enabled = !reminder.isExpired,
+                modifier = Modifier.padding(start = 4.dp),
             )
         }
     }
