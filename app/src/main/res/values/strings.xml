@@ -40,6 +40,7 @@
     <string name="screen_title_add_reminder">New Reminder</string>
     <string name="screen_title_edit_reminder">Edit Reminder</string>
     <string name="label_title">Title</string>
+    <string name="hint_title_placeholder">Reminder</string>
     <string name="label_date">Date</string>
     <string name="label_time">Time</string>
     <string name="label_recurrence">Recurrence</string>

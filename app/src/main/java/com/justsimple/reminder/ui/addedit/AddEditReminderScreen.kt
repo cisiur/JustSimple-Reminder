@@ -165,10 +165,7 @@ fun AddEditReminderScreen(
                     value = uiState.title,
                     onValueChange = viewModel::onTitleChange,
                     label = { Text(stringResource(R.string.label_title)) },
-                    isError = uiState.titleError,
-                    supportingText = if (uiState.titleError) {
-                        { Text(stringResource(R.string.error_title_empty)) }
-                    } else null,
+                    placeholder = { Text(stringResource(R.string.hint_title_placeholder)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(

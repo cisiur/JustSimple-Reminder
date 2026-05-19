@@ -63,7 +63,7 @@ class AddEditReminderViewModel @Inject constructor(
     }
 
     fun onTitleChange(value: String) =
-        _uiState.update { it.copy(title = value, titleError = false) }
+        _uiState.update { it.copy(title = value) }
 
     fun onDateChange(date: LocalDate) =
         _uiState.update { it.copy(scheduledDate = date, showPastDateError = false) }
@@ -80,10 +80,9 @@ class AddEditReminderViewModel @Inject constructor(
 
     fun save() {
         val state = _uiState.value
-        if (state.title.isBlank()) {
-            _uiState.update { it.copy(titleError = true) }
-            return
-        }
+        // Use "Reminder" as the fallback title when the user leaves the field empty.
+        val effectiveTitle = state.title.trim().ifBlank { DEFAULT_TITLE }
+
         viewModelScope.launch {
             val now = System.currentTimeMillis()
 
@@ -106,7 +105,7 @@ class AddEditReminderViewModel @Inject constructor(
             val existing = if (reminderId != null) repository.getById(reminderId) else null
             val base = if (existing != null) {
                 existing.copy(
-                    title = state.title.trim(),
+                    title = effectiveTitle,
                     scheduledDate = dateStr,
                     scheduledTime = timeStr,
                     recurrenceType = state.recurrenceType,
@@ -114,7 +113,7 @@ class AddEditReminderViewModel @Inject constructor(
                 )
             } else {
                 ReminderEntity(
-                    title = state.title.trim(),
+                    title = effectiveTitle,
                     scheduledDate = dateStr,
                     scheduledTime = timeStr,
                     recurrenceType = state.recurrenceType,
@@ -152,5 +151,9 @@ class AddEditReminderViewModel @Inject constructor(
 
             _uiState.update { it.copy(isSaved = true) }
         }
+    }
+
+    companion object {
+        private const val DEFAULT_TITLE = "Reminder"
     }
 }

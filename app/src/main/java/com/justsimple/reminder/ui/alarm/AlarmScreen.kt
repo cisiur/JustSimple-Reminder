@@ -1,7 +1,5 @@
 package com.justsimple.reminder.ui.alarm
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,7 +16,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
@@ -33,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -44,6 +42,14 @@ import com.justsimple.reminder.R
 import kotlinx.coroutines.delay
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+
+// Fixed colours for the alarm screen — always dark regardless of app theme.
+private val AlarmBg         = Color.Black
+private val AlarmOnBg       = Color.White
+private val AlarmSubtle     = Color(0xFF9E9E9E)   // muted text (scheduled time)
+private val AlarmAccent     = Color(0xFFFFA726)   // warm amber — alarm icon
+private val AlarmDismiss    = Color(0xFFE53935)   // red dismiss button
+private val AlarmSheetBg    = Color(0xFF1C1C1E)   // dark bottom sheet
 
 private data class SnoozeOption(val labelRes: Int, val minutes: Int)
 
@@ -84,13 +90,15 @@ fun AlarmScreen(
         ModalBottomSheet(
             onDismissRequest = { showSnoozeSheet = false },
             sheetState = sheetState,
+            containerColor = AlarmSheetBg,
         ) {
             Text(
                 text = stringResource(R.string.title_snooze_until),
-                style = MaterialTheme.typography.titleMedium,
+                color = AlarmOnBg,
+                fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
             )
-            HorizontalDivider()
+            HorizontalDivider(color = AlarmSubtle.copy(alpha = 0.3f))
             snoozeOptions.forEach { option ->
                 TextButton(
                     onClick = {
@@ -103,7 +111,7 @@ fun AlarmScreen(
                 ) {
                     Text(
                         text = stringResource(option.labelRes),
-                        style = MaterialTheme.typography.bodyLarge,
+                        color = AlarmOnBg,
                         modifier = Modifier.fillMaxWidth(),
                     )
                 }
@@ -114,7 +122,7 @@ fun AlarmScreen(
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background,
+        color = AlarmBg,
     ) {
         Column(
             modifier = Modifier
@@ -130,7 +138,7 @@ fun AlarmScreen(
                 imageVector = Icons.Default.Alarm,
                 contentDescription = null,
                 modifier = Modifier.size(64.dp),
-                tint = MaterialTheme.colorScheme.primary,
+                tint = AlarmAccent,
             )
 
             Spacer(Modifier.height(24.dp))
@@ -140,7 +148,7 @@ fun AlarmScreen(
                 text = currentTime.format(DateTimeFormatter.ofPattern("HH:mm")),
                 fontSize = 72.sp,
                 fontWeight = FontWeight.Light,
-                color = MaterialTheme.colorScheme.onBackground,
+                color = AlarmOnBg,
             )
 
             Spacer(Modifier.height(16.dp))
@@ -148,16 +156,16 @@ fun AlarmScreen(
             if (!uiState.isLoading) {
                 Text(
                     text = uiState.title,
-                    style = MaterialTheme.typography.headlineSmall,
+                    fontSize = 22.sp,
                     fontWeight = FontWeight.SemiBold,
                     textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.onBackground,
+                    color = AlarmOnBg,
                 )
                 Spacer(Modifier.height(8.dp))
                 Text(
                     text = stringResource(R.string.label_scheduled_time, uiState.scheduledTimeLabel),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    fontSize = 14.sp,
+                    color = AlarmSubtle,
                 )
             }
 
@@ -169,10 +177,15 @@ fun AlarmScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = AlarmOnBg,
+                ),
+                border = androidx.compose.foundation.BorderStroke(1.dp, AlarmSubtle),
             ) {
                 Text(
                     text = stringResource(R.string.action_snooze),
-                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 16.sp,
                 )
             }
 
@@ -185,12 +198,14 @@ fun AlarmScreen(
                     .fillMaxWidth()
                     .height(56.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.error,
+                    containerColor = AlarmDismiss,
+                    contentColor = Color.White,
                 ),
             ) {
                 Text(
                     text = stringResource(R.string.action_dismiss),
-                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 16.sp,
                 )
             }
 
