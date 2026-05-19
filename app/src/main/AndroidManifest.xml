@@ -77,6 +77,16 @@
             </intent-filter>
         </receiver>
 
+        <!-- Handles Dismiss / Snooze taps from the alarm notification buttons -->
+        <receiver
+            android:name=".alarms.receivers.AlarmActionReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.justsimple.reminder.ACTION_ALARM_DISMISS" />
+                <action android:name="com.justsimple.reminder.ACTION_ALARM_SNOOZE" />
+            </intent-filter>
+        </receiver>
+
         <!-- Restores all alarms after device reboot -->
         <receiver
             android:name=".alarms.receivers.BootReceiver"
