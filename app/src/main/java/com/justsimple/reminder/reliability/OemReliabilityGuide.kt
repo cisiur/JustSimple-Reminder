@@ -35,6 +35,23 @@ class OemReliabilityGuide @Inject constructor(
         if (!safeStart(intent)) openAppSettings()
     }
 
+    /**
+     * Opens MIUI's "Other Permissions" page for this app directly.
+     * This is where "Display on lock screen" and "Open new windows while running in
+     * the background" are controlled on Xiaomi/Redmi/POCO devices.
+     * Falls back to standard app settings if the MIUI activity is unavailable.
+     */
+    fun openMiuiOtherPermissions() {
+        val intent = Intent("miui.intent.action.APP_PERM_EDITOR").apply {
+            setClassName(
+                "com.miui.securitycenter",
+                "com.miui.permcenter.permissions.PermissionsEditorActivity"
+            )
+            putExtra("extra_pkgname", context.packageName)
+        }
+        if (!safeStart(intent)) openAppSettings()
+    }
+
     fun openAlarmPermissionSettings() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             safeStart(

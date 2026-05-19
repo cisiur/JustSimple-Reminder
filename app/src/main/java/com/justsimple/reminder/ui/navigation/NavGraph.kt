@@ -7,9 +7,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import com.justsimple.reminder.reliability.OemReliabilityGuide
 import com.justsimple.reminder.ui.addedit.AddEditReminderScreen
 import com.justsimple.reminder.ui.reminders.ReminderListScreen
+import com.justsimple.reminder.ui.settings.SettingsScreen
 
 sealed class Screen(val route: String) {
     data object ReminderList : Screen("reminders")
@@ -23,6 +27,8 @@ sealed class Screen(val route: String) {
     data object Reliability : Screen("reliability")
     data object Paywall : Screen("paywall")
 }
+
+private const val PRIVACY_POLICY_URL = "https://justsimplereminder.app/privacy"
 
 @Composable
 fun JustSimpleReminderNavHost(
@@ -63,7 +69,29 @@ fun JustSimpleReminderNavHost(
         }
 
         composable(Screen.Settings.route) {
-            // TODO Module 9
+            val ctx = androidx.compose.ui.platform.LocalContext.current
+            SettingsScreen(
+                onBack = { navController.popBackStack() },
+                onDiagnosticsClick = { navController.navigate(Screen.Diagnostics.route) },
+                onPaywallClick = { navController.navigate(Screen.Paywall.route) },
+                onOpenNotificationSettings = {
+                    ctx.startActivity(
+                        Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                            putExtra(Settings.EXTRA_APP_PACKAGE, ctx.packageName)
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        }
+                    )
+                },
+                onOpenAlarmSettings = { reliabilityGuide.openAlarmPermissionSettings() },
+                onOpenOtherPermissionsSettings = { reliabilityGuide.openMiuiOtherPermissions() },
+                onPrivacyPolicyClick = {
+                    ctx.startActivity(
+                        Intent(Intent.ACTION_VIEW, Uri.parse(PRIVACY_POLICY_URL)).apply {
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        }
+                    )
+                },
+            )
         }
 
         composable(Screen.Diagnostics.route) {

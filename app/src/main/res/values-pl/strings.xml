@@ -32,13 +32,29 @@
     <string name="screen_title_add_reminder">Nowe przypomnienie</string>
     <string name="screen_title_edit_reminder">Edytuj przypomnienie</string>
     <string name="label_title">Tytuł</string>
+    <string name="hint_title_placeholder">Przypomnienie</string>
     <string name="label_date">Data</string>
     <string name="label_time">Godzina</string>
     <string name="label_recurrence">Powtarzanie</string>
     <string name="action_save">Zapisz</string>
+    <string name="action_ok">OK</string>
     <string name="action_cancel">Anuluj</string>
+    <string name="cd_navigate_back">Wróć</string>
     <string name="error_title_empty">Tytuł nie może być pusty.</string>
     <string name="error_date_past">Data i godzina muszą być w przyszłości.</string>
+
+    <string name="recurrence_chip_once">Raz</string>
+    <string name="recurrence_chip_daily">Dziennie</string>
+    <string name="recurrence_chip_weekly">Tygodniowo</string>
+    <string name="recurrence_chip_monthly">Miesięcznie</string>
+
+    <!-- Dialog potwierdzenia usunięcia -->
+    <string name="dialog_delete_title">Usunąć przypomnienie?</string>
+    <string name="dialog_delete_body">Tej operacji nie można cofnąć.</string>
+    <string name="cd_delete_reminder_action">Usuń przypomnienie</string>
+
+    <!-- Dialog daty w przeszłości -->
+    <string name="dialog_past_date_title">Data w przeszłości</string>
 
     <string name="dialog_free_limit_title">Osiągnięto limit</string>
     <string name="dialog_free_limit_body">Darmowy plan pozwala na maksymalnie 2 aktywne przypomnienia. Przejdź na Premium, aby dodawać ich bez ograniczeń.</string>
@@ -68,6 +84,14 @@
 
     <!-- Settings -->
     <string name="screen_title_settings">Ustawienia</string>
+
+    <!-- Sekcja języka -->
+    <string name="settings_section_language">Język</string>
+    <string name="settings_language_label">Język aplikacji</string>
+    <string name="dialog_language_title">Wybierz język</string>
+    <string name="language_english">English</string>
+    <string name="language_polish">Polski</string>
+
     <string name="settings_section_time_format">Format czasu</string>
     <string name="settings_time_format_12h">12-godzinny (AM/PM)</string>
     <string name="settings_time_format_24h">24-godzinny</string>
@@ -86,6 +110,13 @@
     <string name="settings_action_restore">Przywróć zakupy</string>
     <string name="settings_restore_success">Zakupy przywrócone.</string>
     <string name="settings_restore_failure">Nie udało się przywrócić zakupów. Spróbuj ponownie.</string>
+
+    <!-- Sekcja uprawnień MIUI / Xiaomi -->
+    <string name="settings_section_miui_permissions">Uprawnienia MIUI (Inne uprawnienia)</string>
+    <string name="settings_miui_fullscreen_label">Wyświetlaj na ekranie blokady</string>
+    <string name="settings_miui_background_label">Otwieranie nowych okien podczas działania w tle</string>
+    <string name="settings_miui_tap_to_verify">Kliknij, aby sprawdzić w Inne uprawnienia</string>
+
     <string name="settings_section_reliability">Niezawodność alarmów</string>
     <string name="settings_action_diagnostics">Zobacz diagnostykę</string>
     <string name="settings_section_about">O aplikacji</string>

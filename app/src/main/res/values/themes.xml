@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.JustSimpleReminder" parent="android:Theme.Material.Light.NoActionBar" />
+    <!--
+        AppCompatActivity requires an AppCompat-derived theme.
+        The Compose UI draws its own M3 theme on top of this, so the XML parent
+        only matters for the Activity window (status bar colour, window background, etc.)
+        DayNight automatically picks light/dark based on the system setting.
+    -->
+    <style name="Theme.JustSimpleReminder" parent="Theme.AppCompat.DayNight.NoActionBar" />
 </resources>
