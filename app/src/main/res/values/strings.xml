@@ -157,7 +157,9 @@
     <string name="reliability_step_autostart">Enable Autostart for Reminder Alarm</string>
     <string name="reliability_step_battery">Set battery mode to No restrictions</string>
     <string name="reliability_step_lock_screen">Enable Show on lock screen</string>
-    <string name="reliability_step_lock_notifications">Enable Lock screen notifications</string>
+    <string name="reliability_step_lock_screen_subtitle">MIUI Other Permissions — lets the alarm screen appear over the lock screen when the phone is locked</string>
+    <string name="reliability_step_lock_notifications">Show notification on lock screen</string>
+    <string name="reliability_step_lock_notifications_subtitle">Android notification settings — controls the notification banner on the lock screen (separate from the MIUI permission above)</string>
     <string name="action_open_autostart">Open Autostart settings</string>
     <string name="action_open_lock_screen_settings">Open lock screen settings</string>
 

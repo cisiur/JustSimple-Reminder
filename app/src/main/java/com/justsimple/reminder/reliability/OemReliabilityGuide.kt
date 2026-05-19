@@ -36,6 +36,20 @@ class OemReliabilityGuide @Inject constructor(
     }
 
     /**
+     * Opens the most relevant settings for enabling lock-screen display.
+     * On MIUI this is the "Other Permissions" page ("Display on lock screen").
+     * On other OEMs it falls back to the app details settings.
+     */
+    fun openLockScreenSettings() {
+        val oemBrand = OemDetector.detect()
+        if (oemBrand == OemBrand.XIAOMI) {
+            openMiuiOtherPermissions()
+        } else {
+            openAppSettings()
+        }
+    }
+
+    /**
      * Opens MIUI's "Other Permissions" page for this app directly.
      * This is where "Display on lock screen" and "Open new windows while running in
      * the background" are controlled on Xiaomi/Redmi/POCO devices.

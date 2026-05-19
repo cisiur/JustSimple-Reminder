@@ -147,7 +147,9 @@
     <string name="reliability_step_autostart">Włącz Autostart dla Reminder Alarm</string>
     <string name="reliability_step_battery">Ustaw tryb baterii na Brak ograniczeń</string>
     <string name="reliability_step_lock_screen">Włącz Pokaż na ekranie blokady</string>
-    <string name="reliability_step_lock_notifications">Włącz Powiadomienia na ekranie blokady</string>
+    <string name="reliability_step_lock_screen_subtitle">Inne uprawnienia MIUI — pozwala ekranowi alarmu pojawiać się na ekranie blokady</string>
+    <string name="reliability_step_lock_notifications">Pokaż powiadomienie na ekranie blokady</string>
+    <string name="reliability_step_lock_notifications_subtitle">Ustawienia powiadomień Android — kontroluje baner powiadomienia na ekranie blokady (osobne od uprawnienia MIUI powyżej)</string>
     <string name="action_open_autostart">Otwórz ustawienia autostaru</string>
     <string name="action_open_lock_screen_settings">Otwórz ustawienia ekranu blokady</string>
 

@@ -12,6 +12,8 @@ import android.net.Uri
 import android.provider.Settings
 import com.justsimple.reminder.reliability.OemReliabilityGuide
 import com.justsimple.reminder.ui.addedit.AddEditReminderScreen
+import com.justsimple.reminder.ui.diagnostics.DiagnosticsScreen
+import com.justsimple.reminder.ui.diagnostics.ReliabilityScreen
 import com.justsimple.reminder.ui.reminders.ReminderListScreen
 import com.justsimple.reminder.ui.settings.SettingsScreen
 
@@ -95,11 +97,32 @@ fun JustSimpleReminderNavHost(
         }
 
         composable(Screen.Diagnostics.route) {
-            // TODO Module 10
+            val ctx = androidx.compose.ui.platform.LocalContext.current
+            DiagnosticsScreen(
+                onBack = { navController.popBackStack() },
+                onOpenBatterySettings = { reliabilityGuide.openBatteryOptimizationSettings() },
+                onOpenAlarmSettings = { reliabilityGuide.openAlarmPermissionSettings() },
+                onOpenNotificationSettings = {
+                    ctx.startActivity(
+                        Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                            putExtra(Settings.EXTRA_APP_PACKAGE, ctx.packageName)
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        }
+                    )
+                },
+                onOpenAppSettings = { reliabilityGuide.openAppSettings() },
+                onReliabilityClick = { navController.navigate(Screen.Reliability.route) },
+            )
         }
 
         composable(Screen.Reliability.route) {
-            // TODO Module 10
+            ReliabilityScreen(
+                onBack = { navController.popBackStack() },
+                onOpenAutostart = { reliabilityGuide.openXiaomiAutostart() },
+                onOpenBatterySettings = { reliabilityGuide.openBatteryOptimizationSettings() },
+                onOpenLockScreenSettings = { reliabilityGuide.openLockScreenSettings() },
+                onOpenAppSettings = { reliabilityGuide.openAppSettings() },
+            )
         }
 
         composable(Screen.Paywall.route) {
