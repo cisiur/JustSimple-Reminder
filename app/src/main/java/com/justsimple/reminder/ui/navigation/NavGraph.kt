@@ -76,16 +76,6 @@ fun JustSimpleReminderNavHost(
                 onBack = { navController.popBackStack() },
                 onDiagnosticsClick = { navController.navigate(Screen.Diagnostics.route) },
                 onPaywallClick = { navController.navigate(Screen.Paywall.route) },
-                onOpenNotificationSettings = {
-                    ctx.startActivity(
-                        Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
-                            putExtra(Settings.EXTRA_APP_PACKAGE, ctx.packageName)
-                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        }
-                    )
-                },
-                onOpenAlarmSettings = { reliabilityGuide.openAlarmPermissionSettings() },
-                onOpenOtherPermissionsSettings = { reliabilityGuide.openMiuiOtherPermissions() },
                 onPrivacyPolicyClick = {
                     ctx.startActivity(
                         Intent(Intent.ACTION_VIEW, Uri.parse(PRIVACY_POLICY_URL)).apply {
@@ -111,6 +101,7 @@ fun JustSimpleReminderNavHost(
                     )
                 },
                 onOpenAppSettings = { reliabilityGuide.openAppSettings() },
+                onOpenOtherPermissionsSettings = { reliabilityGuide.openMiuiOtherPermissions() },
                 onReliabilityClick = { navController.navigate(Screen.Reliability.route) },
             )
         }

@@ -128,6 +128,7 @@
 
     <string name="settings_section_reliability">Alarm Reliability</string>
     <string name="settings_action_diagnostics">View diagnostics</string>
+    <string name="settings_action_diagnostics_subtitle">Check why alarms may not work as expected</string>
     <string name="settings_section_about">About</string>
     <string name="settings_privacy_policy">Privacy Policy</string>
     <string name="settings_version">Version %1$s</string>

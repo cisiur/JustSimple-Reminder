@@ -30,6 +30,8 @@ data class DiagnosticsUiState(
     val fullScreenIntentGranted: Boolean = true,
     /** Only meaningful (and shown) on API 34+ where USE_FULL_SCREEN_INTENT became a real permission. */
     val showFullScreenCheck: Boolean = false,
+    /** Show MIUI-specific "Other Permissions" rows on Xiaomi/Redmi/POCO devices. */
+    val showMiuiPermissions: Boolean = false,
     val manufacturer: String = "",
     val model: String = "",
     val androidVersion: String = "",
@@ -78,6 +80,7 @@ class DiagnosticsViewModel @Inject constructor(
                     batteryOptimizationOff = info.isIgnoringBatteryOptimizations,
                     fullScreenIntentGranted = info.canUseFullScreenIntent,
                     showFullScreenCheck = Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE,
+                    showMiuiPermissions = info.oemBrand == OemBrand.XIAOMI,
                     manufacturer = info.manufacturer,
                     model = info.model,
                     androidVersion = info.androidVersion,

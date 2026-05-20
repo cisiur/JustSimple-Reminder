@@ -16,8 +16,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Error
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -42,7 +40,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -50,10 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.os.LocaleListCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.repeatOnLifecycle
 import com.justsimple.reminder.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,15 +55,11 @@ import com.justsimple.reminder.R
 fun SettingsScreen(
     onDiagnosticsClick: () -> Unit,
     onPaywallClick: () -> Unit,
-    onOpenNotificationSettings: () -> Unit,
-    onOpenAlarmSettings: () -> Unit,
-    onOpenOtherPermissionsSettings: () -> Unit,
     onPrivacyPolicyClick: () -> Unit,
     onBack: () -> Unit,
     viewModel: SettingsViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val lifecycleOwner = LocalLifecycleOwner.current
     val snackbarHost = remember { SnackbarHostState() }
     val ctx = LocalContext.current
 
@@ -86,13 +76,6 @@ fun SettingsScreen(
                 )
             },
         )
-    }
-
-    // Refresh permission status whenever the screen comes back to foreground
-    LaunchedEffect(lifecycleOwner) {
-        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-            viewModel.refreshPermissions()
-        }
     }
 
     // Restore-purchases result snackbar
@@ -164,28 +147,6 @@ fun SettingsScreen(
             }
             item { SectionDivider() }
 
-            // ── Permissions ───────────────────────────────────────────────
-            item { SectionHeader(stringResource(R.string.settings_section_permissions)) }
-            item {
-                PermissionRow(
-                    label = stringResource(R.string.settings_notifications_label),
-                    granted = uiState.notificationsGranted,
-                    grantedText = stringResource(R.string.settings_notifications_granted),
-                    deniedText = stringResource(R.string.settings_notifications_denied),
-                    onClick = if (!uiState.notificationsGranted) onOpenNotificationSettings else null,
-                )
-            }
-            item {
-                PermissionRow(
-                    label = stringResource(R.string.settings_exact_alarms_label),
-                    granted = uiState.exactAlarmsGranted,
-                    grantedText = stringResource(R.string.settings_exact_alarms_granted),
-                    deniedText = stringResource(R.string.settings_exact_alarms_denied),
-                    onClick = if (!uiState.exactAlarmsGranted) onOpenAlarmSettings else null,
-                )
-            }
-            item { SectionDivider() }
-
             // ── Subscription ──────────────────────────────────────────────
             item { SectionHeader(stringResource(R.string.settings_section_subscription)) }
             item {
@@ -226,33 +187,12 @@ fun SettingsScreen(
             }
             item { SectionDivider() }
 
-            // ── MIUI / Xiaomi "Other Permissions" ────────────────────────
-            // These are MIUI-proprietary permissions that cannot be read via standard Android APIs.
-            // We show them as "tap to verify" rows that open the MIUI Other Permissions page directly.
-            if (uiState.showMiuiPermissions) {
-                item { SectionHeader(stringResource(R.string.settings_section_miui_permissions)) }
-                item {
-                    MiuiActionRow(
-                        label = stringResource(R.string.settings_miui_fullscreen_label),
-                        subtitle = stringResource(R.string.settings_miui_tap_to_verify),
-                        onClick = onOpenOtherPermissionsSettings,
-                    )
-                }
-                item {
-                    MiuiActionRow(
-                        label = stringResource(R.string.settings_miui_background_label),
-                        subtitle = stringResource(R.string.settings_miui_tap_to_verify),
-                        onClick = onOpenOtherPermissionsSettings,
-                    )
-                }
-                item { SectionDivider() }
-            }
-
             // ── Alarm Reliability ─────────────────────────────────────────
             item { SectionHeader(stringResource(R.string.settings_section_reliability)) }
             item {
                 ArrowRow(
                     label = stringResource(R.string.settings_action_diagnostics),
+                    subtitle = stringResource(R.string.settings_action_diagnostics_subtitle),
                     onClick = onDiagnosticsClick,
                 )
             }
@@ -396,58 +336,30 @@ private fun SwitchRow(
     }
 }
 
-@Composable
-private fun PermissionRow(
-    label: String,
-    granted: Boolean,
-    grantedText: String,
-    deniedText: String,
-    onClick: (() -> Unit)?,
-) {
-    val statusIcon: ImageVector
-    val statusColor = if (granted) MaterialTheme.colorScheme.primary
-                      else MaterialTheme.colorScheme.error
-    statusIcon = if (granted) Icons.Default.CheckCircle else Icons.Default.Error
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier)
-            .padding(horizontal = 16.dp, vertical = 14.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Column(modifier = Modifier.weight(1f)) {
-            Text(label, style = MaterialTheme.typography.bodyLarge)
-            Text(
-                text = if (granted) grantedText else deniedText,
-                style = MaterialTheme.typography.bodySmall,
-                color = statusColor,
-            )
-        }
-        Spacer(Modifier.width(8.dp))
-        Icon(
-            imageVector = statusIcon,
-            contentDescription = null,
-            tint = statusColor,
-            modifier = Modifier.size(20.dp),
-        )
-    }
-}
 
 @Composable
-private fun ArrowRow(label: String, onClick: () -> Unit) {
+private fun ArrowRow(label: String, subtitle: String? = null, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 16.dp),
+            .padding(horizontal = 16.dp, vertical = 14.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.weight(1f),
-        )
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.bodyLarge,
+            )
+            if (subtitle != null) {
+                Text(
+                    text = subtitle,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
+        Spacer(Modifier.width(8.dp))
         Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowForward,
             contentDescription = null,

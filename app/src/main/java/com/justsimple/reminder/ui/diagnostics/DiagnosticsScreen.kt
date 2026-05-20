@@ -1,5 +1,6 @@
 package com.justsimple.reminder.ui.diagnostics
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
@@ -47,6 +49,7 @@ fun DiagnosticsScreen(
     onOpenAlarmSettings: () -> Unit,
     onOpenNotificationSettings: () -> Unit,
     onOpenAppSettings: () -> Unit,
+    onOpenOtherPermissionsSettings: () -> Unit,
     onReliabilityClick: () -> Unit,
     viewModel: DiagnosticsViewModel = hiltViewModel(),
 ) {
@@ -119,6 +122,30 @@ fun DiagnosticsScreen(
                 }
             }
 
+            // ── MIUI "Other Permissions" (Xiaomi/Redmi/POCO only) ────────
+            if (uiState.showMiuiPermissions) {
+                item { Spacer(Modifier.height(8.dp)) }
+                item { HorizontalDivider() }
+                item { Spacer(Modifier.height(8.dp)) }
+                item {
+                    SectionLabel(stringResource(R.string.settings_section_miui_permissions))
+                }
+                item {
+                    MiuiActionRow(
+                        label = stringResource(R.string.settings_miui_fullscreen_label),
+                        subtitle = stringResource(R.string.settings_miui_tap_to_verify),
+                        onClick = onOpenOtherPermissionsSettings,
+                    )
+                }
+                item {
+                    MiuiActionRow(
+                        label = stringResource(R.string.settings_miui_background_label),
+                        subtitle = stringResource(R.string.settings_miui_tap_to_verify),
+                        onClick = onOpenOtherPermissionsSettings,
+                    )
+                }
+            }
+
             item { Spacer(Modifier.height(8.dp)) }
             item { HorizontalDivider() }
             item { Spacer(Modifier.height(8.dp)) }
@@ -169,6 +196,33 @@ fun DiagnosticsScreen(
 }
 
 // ── Subcomponents ─────────────────────────────────────────────────────────────
+
+@Composable
+private fun MiuiActionRow(label: String, subtitle: String, onClick: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
+            Text(label, style = MaterialTheme.typography.bodyLarge)
+            Text(
+                text = subtitle,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        Spacer(Modifier.width(8.dp))
+        Icon(
+            imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.size(20.dp),
+        )
+    }
+}
 
 @Composable
 private fun SectionLabel(text: String) {

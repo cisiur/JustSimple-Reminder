@@ -119,6 +119,7 @@
 
     <string name="settings_section_reliability">Niezawodność alarmów</string>
     <string name="settings_action_diagnostics">Zobacz diagnostykę</string>
+    <string name="settings_action_diagnostics_subtitle">Sprawdź, dlaczego alarmy mogą nie działać poprawnie</string>
     <string name="settings_section_about">O aplikacji</string>
     <string name="settings_privacy_policy">Polityka prywatności</string>
     <string name="settings_version">Wersja %1$s</string>
