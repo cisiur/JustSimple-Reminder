@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JustSimple Reminder – Privacy Policy</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #ffffff;
+      --surface:   #f6f7f9;
+      --border:    #e4e7ec;
+      --text:      #1a1d23;
+      --muted:     #6b7280;
+      --accent:    #4f6ef7;
+      --accent-bg: #eef1fe;
+      --radius:    10px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                   Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      font-size: 16px;
+    }
+
+    /* ── Layout ── */
+    .wrapper {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ── Header ── */
+    header {
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 24px;
+      margin-bottom: 40px;
+    }
+    header .app-label {
+      display: inline-block;
+      background: var(--accent-bg);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+    header h1 {
+      font-size: clamp(24px, 5vw, 34px);
+      font-weight: 800;
+      letter-spacing: -.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    header .meta {
+      font-size: 14px;
+      color: var(--muted);
+    }
+    header .meta span { margin-right: 16px; }
+
+    /* ── Sections ── */
+    section {
+      margin-bottom: 44px;
+    }
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    h2 .num {
+      color: var(--accent);
+      margin-right: 6px;
+    }
+    h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 18px 0 8px;
+      color: var(--text);
+    }
+    p { margin-bottom: 12px; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── Lists ── */
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 12px;
+    }
+    ul li {
+      padding: 4px 0 4px 20px;
+      position: relative;
+    }
+    ul li::before {
+      content: "–";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* ── Callout boxes ── */
+    .box {
+      background: var(--surface);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 14px 18px;
+      margin: 16px 0;
+    }
+    .box.good  { border-color: #22c55e; background: #f0fdf4; }
+    .box.warn  { border-color: #f59e0b; background: #fffbeb; }
+
+    /* ── Permissions table ── */
+    .perm-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 12px 0;
+      font-size: 15px;
+    }
+    .perm-grid .ph {
+      grid-column: 1 / -1;
+      background: var(--surface);
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .perm-grid .pk, .perm-grid .pv {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .perm-grid .pk {
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 13px;
+      color: var(--accent);
+      background: var(--accent-bg);
+      white-space: nowrap;
+    }
+    .perm-grid > :nth-last-child(1),
+    .perm-grid > :nth-last-child(2) {
+      border-bottom: none;
+    }
+
+    /* ── Third-party card ── */
+    .third-party {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin: 12px 0;
+    }
+    .third-party h3 { margin-top: 0; }
+    .third-party .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 8px;
+      vertical-align: middle;
+      background: var(--surface);
+      color: var(--muted);
+    }
+    .third-party .badge.premium { background: #fef9c3; color: #854d0e; }
+    .third-party .badge.free    { background: #dbeafe; color: #1e40af; }
+    .third-party a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .third-party a:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 60px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 14px;
+      color: var(--muted);
+      text-align: center;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 480px) {
+      .perm-grid { grid-template-columns: 1fr; }
+      .perm-grid .pk { border-bottom: none; padding-bottom: 2px; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- ── Header ── -->
+  <header>
+    <div class="app-label">Privacy Policy</div>
+    <h1>JustSimple Reminder</h1>
+    <div class="meta">
+      <span>Effective date: 20 May 2026</span>
+      <span>Last updated: 20 May 2026</span>
+    </div>
+  </header>
+
+  <!-- ── 1. Who we are ── -->
+  <section>
+    <h2><span class="num">1.</span> Who we are</h2>
+    <p>
+      JustSimple Reminder is an alarm-style reminder application for Android, developed and
+      published by <strong>JustSimpleSoft</strong> as an independent developer. Questions
+      about this policy can be directed to
+      <a href="mailto:JustSimpleSoft@proton.me">JustSimpleSoft@proton.me</a>.
+    </p>
+    <div class="box good">
+      Your reminders stay <strong>on your device</strong>. We do not operate servers that
+      store your personal reminders or alarm data.
+    </div>
+  </section>
+
+  <!-- ── 2. Data stored locally ── -->
+  <section>
+    <h2><span class="num">2.</span> Data stored on your device</h2>
+    <p>
+      All reminder data is stored exclusively in a local database on your device using
+      <strong>Room</strong> (Android SQLite). This includes:
+    </p>
+    <ul>
+      <li>Reminder title</li>
+      <li>Scheduled date and time</li>
+      <li>Recurrence setting (once / daily / weekly / monthly)</li>
+      <li>Enabled / disabled state</li>
+      <li>Snooze history</li>
+    </ul>
+    <p>
+      Your display preferences (time format, app language) are stored locally using
+      <strong>Android DataStore</strong>. None of this data is transmitted to us or any
+      third party.
+    </p>
+  </section>
+
+  <!-- ── 3. Third-party services ── -->
+  <section>
+    <h2><span class="num">3.</span> Third-party services</h2>
+    <p>
+      The app integrates two third-party SDKs. Each is described below with the data it
+      processes and a link to its own privacy policy.
+    </p>
+
+    <!-- RevenueCat -->
+    <div class="third-party">
+      <h3>3a. RevenueCat <span class="badge premium">Premium plan only</span></h3>
+      <p>
+        RevenueCat handles in-app subscription purchases (the Premium plan). When you
+        make or restore a purchase, RevenueCat receives:
+      </p>
+      <ul>
+        <li>An anonymous app user ID generated by RevenueCat (no name or email)</li>
+        <li>Your purchase receipt from the Google Play Store</li>
+        <li>Device locale and platform (Android)</li>
+      </ul>
+      <p>
+        RevenueCat does <strong>not</strong> receive your reminder content or alarm data.
+        If you never purchase Premium, RevenueCat is not contacted.
+      </p>
+      <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">
+        RevenueCat Privacy Policy →
+      </a>
+    </div>
+
+    <!-- AdMob -->
+    <div class="third-party">
+      <h3>3b. Google AdMob <span class="badge free">Free plan only</span></h3>
+      <p>
+        The free plan displays banner advertisements served by <strong>Google AdMob</strong>.
+        To show relevant ads, Google may collect:
+      </p>
+      <ul>
+        <li>Advertising ID (resettable in Android settings)</li>
+        <li>General device and network information</li>
+        <li>Approximate location (country / region level)</li>
+        <li>Ad interaction events (impressions, clicks)</li>
+      </ul>
+      <p>
+        Upgrading to Premium permanently removes all ads and stops AdMob from being
+        loaded. You can also reset or opt out of personalised ads at any time in
+        <strong>Android Settings → Google → Ads</strong>.
+      </p>
+      <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">
+        Google Privacy Policy →
+      </a>
+    </div>
+  </section>
+
+  <!-- ── 4. Data we do NOT collect ── -->
+  <section>
+    <h2><span class="num">4.</span> Data we do <em>not</em> collect</h2>
+    <div class="box good">
+      <ul>
+        <li>Your name, email address, or any contact information</li>
+        <li>Your location</li>
+        <li>Your contacts, calendar, or files</li>
+        <li>Your reminder titles or alarm times (these never leave your device)</li>
+        <li>Crash reports or analytics (no analytics SDK is used)</li>
+        <li>Any data from children or any data we are unaware of</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── 5. Permissions ── -->
+  <section>
+    <h2><span class="num">5.</span> Android permissions used</h2>
+    <p>
+      The app requests only the permissions necessary to deliver alarm functionality.
+      No permission is used to collect or transmit personal data.
+    </p>
+
+    <div class="perm-grid">
+      <div class="ph">Alarm &amp; scheduling</div>
+      <div class="pk">SCHEDULE_EXACT_ALARM / USE_EXACT_ALARM</div>
+      <div class="pv">Fires reminders at the exact time you set.</div>
+      <div class="pk">USE_FULL_SCREEN_INTENT</div>
+      <div class="pv">Shows the alarm screen when the device is locked.</div>
+      <div class="pk">WAKE_LOCK</div>
+      <div class="pv">Wakes the screen briefly when an alarm fires.</div>
+      <div class="pk">VIBRATE</div>
+      <div class="pv">Vibrates on alarm delivery.</div>
+
+      <div class="ph">System events</div>
+      <div class="pk">RECEIVE_BOOT_COMPLETED</div>
+      <div class="pv">Re-schedules alarms after the device restarts.</div>
+      <div class="pk">REQUEST_IGNORE_BATTERY_OPTIMIZATIONS</div>
+      <div class="pv">Requests exclusion from battery saver so alarms fire on time.</div>
+
+      <div class="ph">Notifications</div>
+      <div class="pk">POST_NOTIFICATIONS</div>
+      <div class="pv">Shows the alarm notification (Android 13+).</div>
+      <div class="pk">FOREGROUND_SERVICE / FOREGROUND_SERVICE_SPECIAL_USE</div>
+      <div class="pv">Keeps the alarm delivery service running reliably.</div>
+
+      <div class="ph">Network (third-party SDKs only)</div>
+      <div class="pk">INTERNET / ACCESS_NETWORK_STATE</div>
+      <div class="pv">Used by RevenueCat and AdMob. Not used by the app itself.</div>
+    </div>
+  </section>
+
+  <!-- ── 6. Data retention ── -->
+  <section>
+    <h2><span class="num">6.</span> Data retention &amp; deletion</h2>
+    <p>
+      Because all reminder data lives exclusively on your device, you control it entirely:
+    </p>
+    <ul>
+      <li>Delete individual reminders at any time from within the app.</li>
+      <li>
+        Uninstalling the app removes the local database and all preferences immediately.
+      </li>
+      <li>
+        To delete data held by RevenueCat or Google, follow the links in
+        <a href="#section3">Section 3</a> to exercise your rights under their policies.
+      </li>
+    </ul>
+  </section>
+
+  <!-- ── 7. Children's privacy ── -->
+  <section>
+    <h2><span class="num">7.</span> Children's privacy</h2>
+    <p>
+      JustSimple Reminder is not directed at children under 13 years of age. We do not
+      knowingly collect personal information from children. If you believe a child has
+      provided personal information through a third-party SDK embedded in this app, please
+      contact us and we will take appropriate action.
+    </p>
+  </section>
+
+  <!-- ── 8. Security ── -->
+  <section>
+    <h2><span class="num">8.</span> Security</h2>
+    <p>
+      Reminder data is stored in a private application directory accessible only to this
+      app (Android sandboxing). The app does not transfer reminder data over any network.
+      For data processed by RevenueCat or AdMob, please refer to their respective security
+      documentation.
+    </p>
+  </section>
+
+  <!-- ── 9. Changes to this policy ── -->
+  <section>
+    <h2><span class="num">9.</span> Changes to this policy</h2>
+    <p>
+      We may update this Privacy Policy from time to time. When we do, the
+      <strong>Last updated</strong> date at the top of this page will change. Significant
+      changes will be noted in the app's store listing. Continued use of the app after a
+      policy update constitutes acceptance of the revised policy.
+    </p>
+    <div class="box warn">
+      We recommend reviewing this page periodically. You can always reach the latest
+      version at
+      <a href="https://justsimplereminder-legal.netlify.app/">
+        justsimplereminder-legal.netlify.app
+      </a>.
+    </div>
+  </section>
+
+  <!-- ── 10. Contact ── -->
+  <section>
+    <h2><span class="num">10.</span> Contact us</h2>
+    <p>
+      If you have any questions or concerns about this Privacy Policy, please contact us:
+    </p>
+    <ul>
+      <li>
+        <strong>Email:</strong>
+        <a href="mailto:JustSimpleSoft@proton.me">JustSimpleSoft@proton.me</a>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <p>
+      © 2026 JustSimpleSoft &nbsp;·&nbsp;
+      <a href="mailto:JustSimpleSoft@proton.me">JustSimpleSoft@proton.me</a>
+    </p>
+  </footer>
+
+</div>
+</body>
+</html>

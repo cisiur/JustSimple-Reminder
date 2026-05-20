@@ -30,7 +30,7 @@ sealed class Screen(val route: String) {
     data object Paywall : Screen("paywall")
 }
 
-private const val PRIVACY_POLICY_URL = "https://justsimplereminder.app/privacy"
+private const val PRIVACY_POLICY_URL = "https://justsimplereminder-legal.netlify.app/"
 
 @Composable
 fun JustSimpleReminderNavHost(
