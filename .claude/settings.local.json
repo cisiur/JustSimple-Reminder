@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(jar tf *)",
+      "Bash(jar xf *)",
+      "Bash(grep \".kt$\")",
+      "Bash(git -C \"D:/StoryBranch\" status)",
+      "Bash(git -C \"D:/StoryBranch\" init)",
+      "Bash(git commit -m ' *)",
+      "Bash(git branch *)",
+      "Bash(node -e \"const p = require\\('./package.json'\\); console.log\\('next:', p.dependencies.next, '| react:', p.dependencies.react\\)\")",
+      "Bash(npm run *)",
+      "Bash(git add *)",
+      "Bash(git push *)"
+    ]
+  }
+}

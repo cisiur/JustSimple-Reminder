@@ -14,6 +14,7 @@ import com.justsimple.reminder.reliability.OemReliabilityGuide
 import com.justsimple.reminder.ui.addedit.AddEditReminderScreen
 import com.justsimple.reminder.ui.diagnostics.DiagnosticsScreen
 import com.justsimple.reminder.ui.diagnostics.ReliabilityScreen
+import com.justsimple.reminder.ui.paywall.PaywallScreen
 import com.justsimple.reminder.ui.reminders.ReminderListScreen
 import com.justsimple.reminder.ui.settings.SettingsScreen
 
@@ -117,7 +118,7 @@ fun JustSimpleReminderNavHost(
         }
 
         composable(Screen.Paywall.route) {
-            // TODO Module 11
+            PaywallScreen(onBack = { navController.popBackStack() })
         }
     }
 }

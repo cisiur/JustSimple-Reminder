@@ -171,7 +171,11 @@
     <string name="paywall_feature_no_ads">No ads</string>
     <string name="paywall_feature_priority">Priority alarm delivery</string>
     <string name="action_subscribe">Subscribe</string>
+    <string name="action_buy">Buy</string>
+    <string name="action_retry">Retry</string>
+    <string name="paywall_restore">Already subscribed? Restore purchases</string>
     <string name="paywall_terms">Subscription renews automatically. Cancel anytime.</string>
     <string name="paywall_loading">Loading offers…</string>
     <string name="paywall_error">Could not load offers. Check your connection and try again.</string>
+
 </resources>

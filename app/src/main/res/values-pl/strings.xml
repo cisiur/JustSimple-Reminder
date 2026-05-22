@@ -161,6 +161,9 @@
     <string name="paywall_feature_no_ads">Brak reklam</string>
     <string name="paywall_feature_priority">Priorytetowe dostarczanie alarmów</string>
     <string name="action_subscribe">Subskrybuj</string>
+    <string name="action_buy">Kup</string>
+    <string name="action_retry">Spróbuj ponownie</string>
+    <string name="paywall_restore">Masz już subskrypcję? Przywróć zakupy</string>
     <string name="paywall_terms">Subskrypcja odnawia się automatycznie. Anuluj w dowolnym momencie.</string>
     <string name="paywall_loading">Ładowanie ofert…</string>
     <string name="paywall_error">Nie można załadować ofert. Sprawdź połączenie i spróbuj ponownie.</string>
