@@ -45,8 +45,8 @@
 
     <string name="recurrence_chip_once">Raz</string>
     <string name="recurrence_chip_daily">Dziennie</string>
-    <string name="recurrence_chip_weekly">Tygodniowo</string>
-    <string name="recurrence_chip_monthly">Miesięcznie</string>
+    <string name="recurrence_chip_weekly">Co tydz.</string>
+    <string name="recurrence_chip_monthly">Co mies.</string>
 
     <!-- Dialog potwierdzenia usunięcia -->
     <string name="dialog_delete_title">Usunąć przypomnienie?</string>
