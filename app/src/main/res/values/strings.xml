@@ -4,8 +4,8 @@
     <string name="app_name">JustSimple Reminder</string>
 
     <!-- AdMob (replace with real IDs before release) -->
-    <string name="admob_app_id" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
-    <string name="admob_banner_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="admob_app_id" translatable="false">ca-app-pub-2378155255627809~6672065187</string>
+    <string name="admob_banner_unit_id" translatable="false">ca-app-pub-2378155255627809/2237996156</string>
 
     <!-- ── Reminder List Screen ─────────────────────────────────── -->
     <string name="screen_title_reminders">Reminders</string>
