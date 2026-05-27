@@ -43,6 +43,13 @@ class ReminderListViewModel @Inject constructor(
     private val _showExactAlarmWarning = MutableStateFlow(false)
     private val _showFreeTierDialog = MutableStateFlow(false)
 
+    init {
+        // Force a fresh CustomerInfo fetch from RevenueCat on every app start.
+        // The updatedCustomerInfoListener in PremiumManager handles the result —
+        // this call is a safety net for devices where the listener fires late.
+        viewModelScope.launch { premiumManager.refreshPremiumStatus() }
+    }
+
     val uiState: StateFlow<ReminderListUiState> = combine(
         repository.observeAll(),
         premiumManager.observePremiumStatus(),
